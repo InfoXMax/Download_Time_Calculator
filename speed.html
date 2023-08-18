@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download Time Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333333;
+        }
+        label {
+            font-weight: bold;
+            color: #555555;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Download Time Calculator</h2>
+        <label for="fileSize">File Size:</label>
+        <input type="number" id="fileSize" placeholder="File size" step="any" required>
+
+        <label for="sizeUnit">Unit:</label>
+        <select id="sizeUnit">
+            <option value="MB">MB</option>
+            <option value="GB">GB</option>
+        </select>
+
+        <label for="internetSpeed">Internet Speed:</label>
+        <input type="number" id="internetSpeed" placeholder="Internet speed" step="any" required>
+        <span>Mbps</span>
+
+        <button onclick="calculateDownloadTime()">Calculate</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateDownloadTime() {
+            const fileSize = parseFloat(document.getElementById("fileSize").value);
+            const sizeUnit = document.getElementById("sizeUnit").value;
+            const internetSpeed = parseFloat(document.getElementById("internetSpeed").value);
+
+            const fileSizeInBits = sizeUnit === "GB" ? fileSize * 8 * 1024 * 1024 * 1024 : fileSize * 8 * 1024 * 1024;
+            const downloadTimeInSeconds = fileSizeInBits / (internetSpeed * 1000000);
+
+            const hours = Math.floor(downloadTimeInSeconds / 3600);
+            const minutes = Math.floor((downloadTimeInSeconds % 3600) / 60);
+            const seconds = Math.floor(downloadTimeInSeconds % 60);
+
+            const result = `Download Time: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+            document.getElementById("result").textContent = result;
+        }
+    </script>
+</body>
+</html>
